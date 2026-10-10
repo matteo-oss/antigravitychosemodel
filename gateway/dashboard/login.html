@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Antigravity Model Gateway — Sign in</title>
+  <link rel="icon" type="image/png" href="/antigravity-logo.png">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --bg:#000;
+      --surface:rgba(255,255,255,0.03);
+      --border:rgba(255,255,255,0.06);
+      --text:#e4e4e7;
+      --text-dim:#52525b;
+      --accent:#818cf8;
+      --accent-glow:rgba(129,140,248,0.15);
+      --error:#ef4444;
+      --font:'Inter',system-ui,sans-serif;
+    }
+
+    html,body{height:100%}
+
+    body{
+      font-family:var(--font);
+      background:var(--bg);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* Ambient glow */
+    body::before{
+      content:'';
+      position:fixed;
+      top:50%;left:50%;
+      width:600px;height:600px;
+      transform:translate(-50%,-50%);
+      background:radial-gradient(circle,rgba(129,140,248,0.08) 0%,transparent 70%);
+      pointer-events:none;
+      animation:pulseGlow 8s ease-in-out infinite alternate;
+    }
+    @keyframes pulseGlow{
+      0%{opacity:0.5;transform:translate(-50%,-50%) scale(1)}
+      100%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
+    }
+
+    /* Grid pattern */
+    body::after{
+      content:'';
+      position:fixed;inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+      background-size:64px 64px;
+      pointer-events:none;
+      mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,black 20%,transparent 100%);
+    }
+
+    .container{
+      position:relative;z-index:1;
+      width:100%;max-width:320px;
+      padding:0 24px;
+      animation:enter 0.6s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes enter{
+      from{opacity:0;transform:translateY(20px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    /* Logo mark */
+    .mark{
+      width:56px;height:56px;
+      margin:0 auto 24px;
+      position:relative;
+    }
+    .mark img{
+      width:100%;height:100%;
+      border-radius:14px;
+      object-fit:contain;
+      filter:drop-shadow(0 0 30px rgba(129,140,248,0.3));
+    }
+    .mark::after{
+      content:'';position:absolute;inset:-2px;
+      border-radius:16px;
+      background:linear-gradient(135deg,rgba(129,140,248,0.4),rgba(192,132,252,0.4));
+      z-index:-1;filter:blur(10px);opacity:0.5;
+    }
+
+    h1{
+      text-align:center;
+      font-size:15px;font-weight:500;
+      letter-spacing:-0.01em;
+      margin-bottom:4px;
+    }
+    .sub{
+      text-align:center;
+      font-size:12px;
+      color:var(--text-dim);
+      margin-bottom:40px;
+    }
+
+    form{display:flex;flex-direction:column;gap:12px}
+
+    .field{position:relative}
+    .field input{
+      width:100%;
+      padding:10px 12px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px;
+      font-size:13px;
+      color:var(--text);
+      font-family:var(--font);
+      outline:none;
+      transition:border-color 0.2s,box-shadow 0.2s;
+    }
+    .field input:focus{
+      border-color:rgba(129,140,248,0.5);
+      box-shadow:0 0 0 3px rgba(129,140,248,0.1);
+    }
+    .field input::placeholder{color:var(--text-dim)}
+
+    .submit{
+      margin-top:8px;
+      padding:10px;
+      background:linear-gradient(135deg,#818cf8,#a78bfa);
+      border:none;border-radius:8px;
+      font-size:13px;font-weight:500;
+      color:#fff;font-family:var(--font);
+      cursor:pointer;
+      transition:all 0.2s;
+      position:relative;overflow:hidden;
+    }
+    .submit::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,#a78bfa,#c084fc);
+      opacity:0;transition:opacity 0.2s;
+    }
+    .submit:hover::before{opacity:1}
+    .submit span{position:relative;z-index:1}
+    .submit:active{transform:scale(0.98)}
+    .submit:disabled{opacity:0.5;cursor:not-allowed}
+
+    .error{
+      padding:10px 12px;
+      background:rgba(239,68,68,0.1);
+      border:1px solid rgba(239,68,68,0.2);
+      border-radius:8px;
+      font-size:12px;color:var(--error);
+      display:none;
+      animation:shake 0.3s ease;
+    }
+    .error.show{display:block}
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-4px)}
+      75%{transform:translateX(4px)}
+    }
+
+    .hint{
+      margin-top:32px;
+      text-align:center;
+      font-size:11px;
+      color:var(--text-dim);
+      line-height:1.6;
+    }
+    .hint code{
+      font-size:10px;
+      padding:2px 5px;
+      background:rgba(129,140,248,0.1);
+      border-radius:3px;
+      color:var(--accent);
+    }
+
+    /* Theme toggle */
+    .theme-btn{
+      position:fixed;top:16px;right:16px;
+      width:32px;height:32px;
+      background:transparent;
+      border:1px solid var(--border);
+      border-radius:6px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;color:var(--text-dim);
+      transition:all 0.2s;
+      z-index:10;
+    }
+    .theme-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.1)}
+    .theme-btn svg{width:14px;height:14px}
+
+    [data-theme="light"]{
+      --bg:#fafafa;
+      --surface:rgba(0,0,0,0.02);
+      --border:rgba(0,0,0,0.08);
+      --text:#18181b;
+      --text-dim:#a1a1aa;
+      --accent:#6366f1;
+      --accent-glow:rgba(99,102,241,0.15);
+      --error:#dc2626;
+    }
+    [data-theme="light"] body::before{
+      background:radial-gradient(circle,rgba(99,102,241,0.06) 0%,transparent 70%);
+    }
+    [data-theme="light"] body::after{
+      background-image:
+        linear-gradient(rgba(0,0,0,0.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,0,0,0.03) 1px,transparent 1px);
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+  </button>
+
+  <div class="container">
+    <div class="mark">
+      <img src="/antigravity-logo.png" alt="Antigravity Model Gateway">
+    </div>
+
+    <h1>Antigravity</h1>
+    <p class="sub">Model Gateway · antigravity-add-model</p>
+
+    <div class="error" id="error"></div>
+
+    <form id="loginForm" autocomplete="on">
+      <div class="field">
+        <input type="text" id="username" name="username" autocomplete="username" required autofocus placeholder="Username">
+      </div>
+      <div class="field">
+        <input type="password" id="password" name="password" autocomplete="current-password" required placeholder="Password">
+      </div>
+      <button class="submit" type="submit" id="submitBtn"><span>Sign in</span></button>
+    </form>
+
+    <p class="hint">
+      Configure via <code>DASHBOARD_USER</code> and <code>DASHBOARD_PASSWORD</code>
+    </p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const nextUrl = (() => {
+      try {
+        const nextCandidate = new URL(params.get('next') || '/', location.origin);
+        return nextCandidate.origin === location.origin && nextCandidate.protocol === location.protocol
+          ? nextCandidate.pathname + nextCandidate.search + nextCandidate.hash : '/';
+      } catch { return '/'; }
+    })();
+    const stored = localStorage.getItem('ag_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', stored);
+
+    const btn = document.getElementById('themeBtn');
+    const icon = document.getElementById('themeIcon');
+    const sunPath = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+    const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+
+    const updateIcon = () => {
+      icon.innerHTML = document.documentElement.getAttribute('data-theme') === 'light' ? moonPath : sunPath;
+    };
+    updateIcon();
+
+    btn.addEventListener('click', () => {
+      const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('ag_theme', t);
+      updateIcon();
+    });
+
+    fetch('/api/auth/me', { credentials: 'same-origin' })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && d.username) location.replace(nextUrl); })
+      .catch(() => {});
+
+    const form = document.getElementById('loginForm');
+    const errBox = document.getElementById('error');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errBox.classList.remove('show');
+      submitBtn.disabled = true;
+      submitBtn.querySelector('span').textContent = 'Signing in...';
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+          })
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || 'Invalid credentials');
+        }
+        location.replace(nextUrl);
+      } catch (err) {
+        errBox.textContent = err.message;
+        errBox.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.querySelector('span').textContent = 'Sign in';
+      }
+    });
+  </script>
+</body>
+</html>

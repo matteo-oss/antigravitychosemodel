@@ -1,0 +1,33 @@
+{
+  "name": "@vahapogut/antigravity-model-gateway",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optional routing gateway and dashboard for antigravity-add-model",
+  "type": "module",
+  "main": "dist/server.js",
+  "bin": {
+    "antigravity-gateway": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/cli.js start --foreground",
+    "setup": "node dist/cli.js setup",
+    "test": "node --import tsx test/run-gateway.ts"
+  },
+  "dependencies": {
+    "chart.js": "4.4.7",
+    "dotenv": "^17.4.2",
+    "undici": "^7.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "jsdom": "^26.1.0",
+    "tsx": "^4.22.3",
+    "typescript": "^5.7.0"
+  },
+  "license": "MIT"
+}

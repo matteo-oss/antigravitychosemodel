@@ -1,0 +1,3 @@
+# Keep executable/imported scripts compatible with Unix shells and Vite's hashbang parser.
+*.mjs text eol=lf
+*.sh text eol=lf

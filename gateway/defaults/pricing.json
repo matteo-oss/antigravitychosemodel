@@ -1,0 +1,72 @@
+{
+  "$meta": {
+    "autoFree": true
+  },
+  "openrouter": {
+    "default": {
+      "input": 0.5,
+      "output": 1.5
+    }
+  },
+  "nvidia": {
+    "default": {
+      "input": 2.5,
+      "output": 20
+    }
+  },
+  "openai": {
+    "default": {
+      "input": 2.5,
+      "output": 10
+    }
+  },
+  "groq": {
+    "default": {
+      "input": 0.2,
+      "output": 0.2
+    }
+  },
+  "anthropic": {
+    "default": {
+      "input": 3,
+      "output": 15
+    }
+  },
+  "google": {
+    "default": {
+      "input": 1.25,
+      "output": 5
+    }
+  },
+  "zen": {
+    "default": {
+      "input": 3,
+      "output": 15
+    }
+  },
+  "opencode-go": {
+    "default": {
+      "input": 0,
+      "output": 0,
+      "_note": "Flat-rate subscription: $10/mo (first month $5)"
+    }
+  },
+  "ollama": {
+    "default": {
+      "input": 0,
+      "output": 0
+    }
+  },
+  "vllm": {
+    "default": {
+      "input": 0,
+      "output": 0
+    }
+  },
+  "lmstudio": {
+    "default": {
+      "input": 0,
+      "output": 0
+    }
+  }
+}

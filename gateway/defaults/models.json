@@ -1,0 +1,8 @@
+{
+  "_routing_mode": "priority-chain",
+  "_provider_models": {},
+  "_global_provider_priority": ["openai"],
+  "_compaction_enabled": false,
+  "_compaction_threshold": 0.8,
+  "_compaction_tail_turns": 2
+}
