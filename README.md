@@ -2,7 +2,7 @@
   <img src="gateway/dashboard/antigravity-logo.png" width="96" height="96" alt="Google Antigravity logo">
 </p>
 
-<h1 align="center">Antigravity Custom Model Enabler</h1>
+<h1 align="center">Antigravity Chose Model</h1>
 
 <p align="center">
   <strong>Your providers. Your local models. Inside Antigravity.</strong><br>
