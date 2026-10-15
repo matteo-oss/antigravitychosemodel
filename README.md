@@ -6,7 +6,6 @@
 
 <p align="center">
   <strong>Your providers. Your local models. Inside Antigravity.</strong><br>
-  Model management for the standalone desktop app, with an optional gateway and web dashboard.
 </p>
 
 <p align="center">
